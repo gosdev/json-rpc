@@ -16,6 +16,7 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
             "$eq": {
               "type": "number",
@@ -68,6 +69,7 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
             "$eq": {
               "type": "number",
@@ -114,6 +116,7 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
             "$eq": {
               "type": "string",
@@ -177,6 +180,7 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
             "$eq": {
               "type": "number",
@@ -224,6 +228,7 @@
         {
           "type": "object",
           "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
             "$eq": {
               "type": "null",
