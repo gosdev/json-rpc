@@ -241,6 +241,29 @@
           }
         }
       ]
+    },
+    "boolean": {
+      "oneOf": [
+        {
+          "type": "boolean",
+          "description": "Равно"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "$eq": {
+              "type": "boolean",
+              "description": "Равно"
+            },
+            "$ne": {
+              "type": "boolean",
+              "description": "Не равно"
+            }
+          }
+        }
+      ]
     }
   }
 }
