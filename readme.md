@@ -416,22 +416,25 @@ response — описывает спецификацию результата
 
 ## Связанные сущности
 Должна поддерживаться навигация по связанным сущностям. Путь оформляется через точку. Например user.comments.created_at . Используется в секции select и filter. Пример:
-```json
+```json5
 {
 	"jsonrpc": "2.0",
 	"method": "episode.index",
 	"id": "e90dcb75-4d50-426f-a34d-28427d8766ef",
 	"params": {
-      "select": ["id", "created_at", "documents.created_at", "documents.name"]
+      "select": ["id", "created_at", "documents.created_at", "documents.name"],
       "filter": {
 		"id": "355881a3-e2a5-4c9a-9f5b-8c32791ff1c2",
-        "documents.created_at": {"$ge": "2019-01-01T12:00:00", "$le": "2019-10-10T18:00:00"}
+        "documents.created_at": {
+            "$ge": "2019-01-01T12:00:00", 
+            "$le": "2019-10-10T18:00:00"
+        }
       }
 	}
 }
 ```
 Ответ оформляется в виде вложенных сущностей:
-```json
+```json5
 {
 	"jsonrpc": "2.0",
 	"id": "e90dcb75-4d50-426f-a34d-28427d8766ef",
@@ -486,7 +489,7 @@ RUN wget https://raw.githubusercontent.com/gosdev/json-rpc/master/specs/operator
 
 ## Пример спецификации с использованием фильтров
 Пример спецификации на операцию получения списка пользователей
-```json
+```json5
 {
   "id": "/specs/operations/user/get.json",
   "description": "Получить список пользователей",
