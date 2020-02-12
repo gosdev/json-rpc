@@ -1,11 +1,12 @@
 # JSON-RPC API
+![GitHub issues](https://img.shields.io/github/issues-raw/gosdev/json-rpc) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/gosdev/json-rpc)
 
 ## Основное
-Большинство наших сервисов в качестве API используют формат JSON-RPC. 
+Большинство наших сервисов в качестве API используют формат [JSON-RPC 2.0](https://www.jsonrpc.org/specification). 
 
 Атомарной единицей API сервиса является операция. 
 
-Каждый сервис описывает свои операции в виде спецификации в формате jsonschema draft-07 с небольшими авторскими дополнениями.
+Каждый сервис описывает свои операции в виде спецификации в формате [jsonschema draft-07](https://tools.ietf.org/html/draft-handrews-json-schema-01) с небольшими авторскими дополнениями.
 
 ## Формат запроса
 Запрос осуществляется HTTP методом POST с указанием заголовка Content-Type: application/json. Тело запроса: 
@@ -15,7 +16,6 @@
 	"id": "e3690667-ad8f-48bf-be19-40cec933c05b", // required, всегда uuid version 4
 	"method": "report.ready.index", // required, название операции, разделитель всегда точка
 	"params": { // not required, список параметров операции в формате, описанном в секции request ее спецификации
-      
 	}
 }
 ```
