@@ -1,5 +1,4 @@
 # JSON-RPC API
-![GitHub issues](https://img.shields.io/github/issues-raw/gosdev/json-rpc) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/gosdev/json-rpc)
 
 ## Основное
 Большинство наших сервисов в качестве API используют формат [JSON-RPC 2.0](https://www.jsonrpc.org/specification). 
