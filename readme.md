@@ -56,61 +56,50 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   "jsonrpc": "2.0",
   "result": {
     "operation.authorize": {
-      "request": {
-        "properties": {
-          "operation_name": {
-            "type": "string"
-          },
-          "user_id": {
-            "format": "uuid",
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "operation_name"
-        ],
-        "type": "object"
-      },
-      "response": {
-        "properties": {
-          "authorized": {
-            "type": "boolean"
-          },
-          "constraints": {
-            "type": "object"
-          }
-        },
-        "type": "object"
-      }
-    },
-    "operation.authorized": {
-      "request": {
-        "properties": {
-          "user_id": {
-            "format": "uuid",
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "operation"
-        ],
-        "type": "object"
-      },
-      "response": {
-        "items": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "object",
           "properties": {
-            "constraints": {
-              "type": "object"
-            },
-            "name": {
+            "operation_name": {"type": "string"},
+            "user_id": {
+              "format": "uuid",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
               "type": "string"
             }
           },
-          "type": "object"
+          "required": ["operation_name"]
         },
-        "type": "array"
+        "response": {
+          "type": "object",
+          "properties": {
+            "authorized": {"type": "boolean"},
+            "constraints": {"type": "object"}
+          }
+        }
+      }
+    },
+    "operation.authorized": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "format": "uuid",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+              "type": "string"
+            }
+          },
+          "required": ["operation"]
+        },
+        "response": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {"constraints": {"type": "object"}, "name": {"type": "string"}}
+          }
+        }
       }
     }
   }
