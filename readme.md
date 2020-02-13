@@ -144,14 +144,7 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   "jsonrpc": "2.0",
   "result": {
     "authorized": true,
-    "constraints": {
-      "filter.districtId": {
-        "$in": [
-          "155147",
-          "155150"
-        ]
-      }
-    }
+    "constraints": {"filter.districtId": {"$in": ["155147", "155150"]}}
   }
 }
 ```
