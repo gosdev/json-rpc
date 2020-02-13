@@ -127,7 +127,7 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   "jsonrpc": "2.0",
   "method": "operation.authorize",
   "params": {
-    "operation_name": "issue.index"
+    "operation_name": "issue.index",
     "user_id": "567048d5-7a08-482c-80cc-3224eae77e74",
   }
 }
