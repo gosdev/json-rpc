@@ -51,8 +51,7 @@ HTTP код ответа всегда 200. Успешность и неуспе�
 ## Требования к сервисам
 Наличие публичного endpoint по адресу: /api/jsonrpc
 Наличие внутреннего endpoint (недоступного для запросов извне) /specs, который реализует как минимум операцию получения всех доступных операций: operation.all.
-<details><summary>Пример</summary>
-<p>
+Пример:
 
 ```json
 {
@@ -60,15 +59,58 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   "jsonrpc": "2.0",
   "result": {
     "operation.authorize": {
-      "request": {
-        "type": "object",
-        "required": ["operation_name"],
-        "properties": {
-          "operation_name": {"type": "string"},
-          "user_id": {
-            "format": "uuid",
-            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
-            "type": "string"
+      "type": "object",
+      "properties": {
+        "handler": {
+          "endpoint": "api\/jsonrpc",
+          "protocol": "jsonrpc",
+          "method": "operation.authorize"
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "operation_name": {"type": "string"},
+            "user_id": {
+              "format": "uuid",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+              "type": "string"
+            }
+          },
+          "required": ["operation_name"]
+        },
+        "response": {
+          "type": "object",
+          "properties": {
+            "authorized": {"type": "boolean"},
+            "constraints": {"type": "object"}
+          }
+        }
+      }
+    },
+    "operation.authorized": {
+      "type": "object",
+      "properties": {
+        "handler": {
+          "endpoint": "api\/jsonrpc",
+          "protocol": "jsonrpc",
+          "method": "operation.authorized"
+        },
+        "request": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "format": "uuid",
+              "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+              "type": "string"
+            }
+          },
+          "required": ["operation"]
+        },
+        "response": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {"constraints": {"type": "object"}, "name": {"type": "string"}}
           }
         }
       },
@@ -80,8 +122,6 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   }
 }
 ```
-</p>
-</details>
 т.е. по сути возвращается словарь, где ключами являются названия операций, а значениями их спецификации.
 
 ## Версионирование API
@@ -97,15 +137,30 @@ HTTP код ответа всегда 200. Успешность и неуспе�
 `3.` Спецификация операции описывается с помощью нотации jsonschema draft-07. Структура спецификации операции следующая:  
 ```json
 {
-  "request": {
-    "type": "object",
-    "required": ["operation_name"],
-    "properties": {
-      "operation_name": {"type": "string"},
-      "user_id": {
-        "type": "string",
-        "format": "uuid",
-        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+  "type": "object",
+  "properties": {
+    "handler": {
+      "endpoint": "api\/jsonrpc",
+      "protocol": "jsonrpc",
+      "method": "operation.authorize"
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "operation_name": {"type": "string"}
+      },
+      "required": ["operation_name"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "authorized": {"type": "boolean"},
+        "constraints": {"type": "object"}
       }
     }
   },
@@ -118,8 +173,7 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   }
 }
 ```
-<details><summary>Пример запроса этой операции</summary>
-<p>
+Пример запроса этой операции:
 
 ```json
 {
@@ -132,11 +186,15 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   }
 }
 ```
-</p>
-</details>
 
-<details><summary>Пример ответа этой операции</summary>
-<p>
+* handler — описывает параметры для вызова операции: эндпоинт, протокол и имя метода. 
+Имя метода может отличаться от имени операции. Один метод может вызываться разными операциями (алиасы).
+
+* request — описывает спецификацию входных параметров
+
+* response — описывает спецификацию результата
+
+Пример ответа этой операции
 
 ```json
 {
@@ -148,9 +206,6 @@ HTTP код ответа всегда 200. Успешность и неуспе�
   }
 }
 ```
-</p>
-</details>
-
 request — описывает спецификацию входных параметров запроса, т.е. "params" в заросе
 
 response — описывает спецификацию результата, т.е "result" в ответе
@@ -292,10 +347,7 @@ response — описывает спецификацию результата, �
           "minProperties": 1
         }
       },
-      "required": [
-        "filter",
-        "data"
-      ]
+      "required": ["filter", "data"]
     },
     "response": {
       "type": "array",
@@ -326,9 +378,7 @@ response — описывает спецификацию результата, �
             "minProperties": 1
         }
       },
-      "required": [
-        "filter"
-      ]
+      "required": ["filter"]
     },
     "response": {
       "type": "array",
